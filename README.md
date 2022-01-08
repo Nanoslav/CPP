@@ -1,1 +1,1 @@
-# palacinky
+# C++ projects
