@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <object>
 
 using namespace std;
 
