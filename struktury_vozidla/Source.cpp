@@ -50,4 +50,7 @@ int main() {
 			cout << bazar[i].nazev << ", " << bazar[i].rokV << ", cena: " << bazar[i].cena << ",-Kc, barva: " << bazar[i].barva << endl;
 		}
 	}
+	
+	system("pause");
+	return 0;
 }
