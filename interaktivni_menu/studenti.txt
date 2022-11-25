@@ -1,0 +1,4 @@
+Jana 19 4 
+Tomas 18 3
+Jiri 15 1
+Radka 16 2
