@@ -10,7 +10,7 @@ private:
 	string barva;
 	int rokV;
 public:
-	Vozidlo(){}
+	Vozidlo() {}
 	Vozidlo(string nazev, string barva, int rokV) {
 		this->nazev = nazev;
 		this->barva = barva;
@@ -25,6 +25,8 @@ int main() {
 
 	int volba;
 	int pocet = 0;
+	int kapacita = 0;
+	int pozice;
 	string nazev;
 	string barva;
 	int rokV;
@@ -33,7 +35,7 @@ int main() {
 	int tempCount = 0;
 	bool updated = false;
 	string soubor = "vozidla.txt";
-	
+
 	fstream file(soubor);
 	ofstream file2;
 
@@ -41,8 +43,10 @@ int main() {
 		pocet++;
 	}
 
-	Vozidlo *vozidla = new Vozidlo[pocet];
-	Vozidlo *tmp_vozidla;
+	kapacita = pocet;
+
+	Vozidlo* vozidla = new Vozidlo[pocet];
+	Vozidlo* tmp_vozidla;
 
 	file.clear();
 	file.seekg(0);
@@ -88,19 +92,6 @@ int main() {
 			cout << "===================================" << endl;
 			cout << "	PRIDAT NOVE VOZIDLO" << endl;
 			cout << "===================================" << endl;
-			tmp_vozidla = new Vozidlo[pocet]; // tvrdá kopie
-			//tmp_vozidla = vozidla; // mìkká kopie !!!
-
-			for (int i = 0; i < pocet; i++) {
-				tmp_vozidla[i] = vozidla[i];
-			}
-
-			delete[] vozidla;
-			vozidla = new Vozidlo[++pocet];
-
-			for (int i = 0; i < pocet - 1; i++) {
-				vozidla[i] = tmp_vozidla[i];
-			}
 
 			cout << "Nazev: ";
 			cin >> nazev;
@@ -109,11 +100,32 @@ int main() {
 			cout << "Rok vyroby: ";
 			cin >> rokV;
 
-			vozidla[pocet - 1] = Vozidlo(nazev, barva, rokV);
-			updated = true;
-			delete[] tmp_vozidla;
+			if(kapacita == pocet){
+				kapacita++;
+				tmp_vozidla = new Vozidlo[pocet]; // tvrdá kopie
+				//tmp_vozidla = vozidla; // mìkká kopie !!!
 
-			cout << "Nove vozidlo bylo pridano" << endl;
+				for (int i = 0; i < pocet; i++) {
+					tmp_vozidla[i] = vozidla[i];
+				}
+
+				delete[] vozidla;
+				vozidla = new Vozidlo[++pocet];
+
+				for (int i = 0; i < pocet - 1; i++) {
+					vozidla[i] = tmp_vozidla[i];
+				}
+				vozidla[pocet - 1] = Vozidlo(nazev, barva, rokV);
+				updated = true;
+				delete[] tmp_vozidla;
+
+				cout << "Nove vozidlo bylo pridano" << endl;
+			}
+			else {
+				vozidla[pocet - 1] = Vozidlo(nazev, barva, rokV);
+				pocet++;
+				cout << endl;
+			}
 
 			system("pause");
 			break;
@@ -121,14 +133,27 @@ int main() {
 			cout << "===================================" << endl;
 			cout << "	SMAZAT VOZIDLO" << endl;
 			cout << "===================================" << endl;
+			for (int i = 0; i < pocet; i++) {
+				cout << i + 1 << ". Nazev: " << vozidla[i].getName() << ", barva: " << vozidla[i].getColor() << ", rok vyroby: " << vozidla[i].getYear() << endl;
+			}
+			cout << "===================================" << endl;
+			cout << "Zadej pozici vozidla: ";
+			cin >> pozice;
 
+			for (int i = 0; i < pocet - 1; i++) {
+				if (pozice - 1 < i) {
+					vozidla[i] = vozidla[i + 1];
+				}
+			}
+			pocet--;
+			updated = true;
 			system("pause");
 			break;
 		case 4:
 			cout << "===================================" << endl;
 			cout << "	EDITOVAT VOZIDLO" << endl;
 			cout << "===================================" << endl;
-
+			cout << "Kapacita " << kapacita << endl;
 			system("pause");
 			break;
 		case 5:
@@ -180,7 +205,7 @@ int main() {
 			cout << "	UKONCENI PROGRAMU" << endl;
 			cout << "===================================" << endl;
 			cout << "Program bude ukoncen..." << endl;
-			
+
 			if (updated) {
 				cout << "Byla zjistena uprava dat, aktualizuji data..." << endl;
 
