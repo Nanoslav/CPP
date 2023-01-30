@@ -104,6 +104,8 @@ int main() {
 			cout << "Rok vyroby: ";
 			cin >> rokV;
 
+			updated = true;
+
 			if(kapacita == pocet){
 				kapacita++;
 				tmp_vozidla = new Vozidlo[pocet]; // tvrdá kopie
@@ -120,7 +122,6 @@ int main() {
 					vozidla[i] = tmp_vozidla[i];
 				}
 				vozidla[pocet - 1] = Vozidlo(nazev, barva, rokV);
-				updated = true;
 				delete[] tmp_vozidla;
 
 				cout << "Nove vozidlo bylo pridano" << endl;
