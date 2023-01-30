@@ -19,6 +19,10 @@ public:
 	string getName() { return this->nazev; }
 	string getColor() { return this->barva; }
 	int getYear() { return this->rokV; }
+
+	void setName(string nazev) { this->nazev = nazev; }
+	void setColor(string barva) { this->barva = barva; }
+	void setYear(int rokV) { this->rokV = rokV; }
 };
 
 int main() {
@@ -153,8 +157,53 @@ int main() {
 			cout << "===================================" << endl;
 			cout << "	EDITOVAT VOZIDLO" << endl;
 			cout << "===================================" << endl;
-			cout << "Kapacita " << kapacita << endl;
-			system("pause");
+			for (int i = 0; i < pocet; i++) {
+				cout << i + 1 << ". Nazev: " << vozidla[i].getName() << ", barva: " << vozidla[i].getColor() << ", rok vyroby: " << vozidla[i].getYear() << endl;
+			}
+			cout << "===================================" << endl;
+			cout << "Zadej pozici vozidla: ";
+			cin >> pozice;
+
+			do {
+				system("cls");
+
+				cout << "===================================" << endl;
+				cout << "	EDITACE VOZIDLA ID " << pozice << endl;
+				cout << "===================================" << endl;
+				cout << "Znacka: " << vozidla[pozice-1].getName() << ", barva: " << vozidla[pozice-1].getColor() << ", rok vyroby: " << vozidla[pozice-1].getYear() << endl;
+				cout << "===================================" << endl;
+				cout << "1) Znacka vozidla" << endl;
+				cout << "2) Barva vozidla" << endl;
+				cout << "3) Rok vyroby vozidla" << endl;
+				cout << "4) Zpet do menu" << endl;
+				cout << "===================================" << endl;
+				cout << "Zvoleno: ";
+				cin >> volba;
+
+				switch (volba) {
+				case 1:
+					cout << "Zadej novou znacku vozidla: ";
+					cin >> nazev;
+					vozidla[pozice - 1].setName(nazev);
+					updated = true;
+					break;
+				case 2:
+					cout << "Zadej novou barvu vozidla: ";
+					cin >> barva;
+					vozidla[pozice - 1].setColor(barva);
+					updated = true;
+					break;
+				case 3:
+					cout << "Zadej novy rok vyroby vozidla: ";
+					cin >> rokV;
+					vozidla[pozice - 1].setYear(rokV);
+					updated = true;
+					break;
+				}
+
+
+			} while (volba != 4);
+
 			break;
 		case 5:
 			cout << "===================================" << endl;
