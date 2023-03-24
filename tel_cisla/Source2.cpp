@@ -35,7 +35,11 @@ public:
 
 struct Presence {
 	string phone;
-	int number;
+	int count;
+	Presence(string phone, int count) {
+		this->phone = phone;
+		this->count = count;
+	}
 };
 
 int main() {
@@ -64,18 +68,46 @@ int main() {
 
 	vector<Presence> presence;
 	string ph1;
+	bool found;
 
 	for (int i = 0; i < comms.size(); i++)
 	{
-		if (comms[i].getCaller() == phone) {
-			//druhe se prida getCalled
+		if (comms[i].getCaller() == phone) { //caller volajici, called volany
 			ph1 = comms[i].getCalled();
 		}
 		else{
 			ph1 = comms[i].getCaller();
 		}
+
+		found = false;
+		int index;
+		for (int j = 0; j < presence.size(); j++)
+		{
+			if (presence[j].phone == ph1) {
+				found = true;
+				index = j;
+				break;
+			}
+		}
+
+		if (found) {
+			presence[index].count++;
+		}
+		else {
+			presence.push_back(Presence(ph1, 1));
+		}
 		
 	}
+
+	int countData = 0;
+
+	for (int i = 0; i < presence.size(); i++)
+	{
+		cout << presence[i].phone << " " << presence[i].count << endl;
+		countData += presence[i].count;
+	}
+
+	cout << "Celkem: " << countData << endl;
 
 	system("pause");
 	return 0;
