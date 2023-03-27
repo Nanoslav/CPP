@@ -36,6 +36,7 @@ public:
 struct Presence {
 	string phone;
 	int count;
+	Presence(){}
 	Presence(string phone, int count) {
 		this->phone = phone;
 		this->count = count;
@@ -97,6 +98,20 @@ int main() {
 			presence.push_back(Presence(ph1, 1));
 		}
 		
+	}
+
+	Presence search;
+
+	for (int i = 0; i < presence.size(); i++)
+	{
+		for (int j = 0; j < i; j++)
+		{
+			if (presence[i].count > presence[j].count) {
+				search = presence[i];
+				presence[i] = presence[j];
+				presence[j] = search;
+			}
+		}
 	}
 
 	int countData = 0;
